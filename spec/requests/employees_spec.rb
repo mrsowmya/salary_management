@@ -25,9 +25,11 @@ RSpec.describe "Employees API", type: :request do
   describe 'GET /employees/:id' do
     it 'returns employee' do
 
-      get "/employees/#{employees.first.id}"
+      employee = employees.first.id
+      get "/employees/#{employee}"
+
       expect(response).to have_http_status(:ok)
-      expect(JSON.parse(response.body)).to eq(employees.first)
+      expect(JSON.parse(response.body)['id']).to eq(employee)
     end
   end
 

@@ -33,5 +33,31 @@ RSpec.describe "Employees API", type: :request do
     end
   end
 
+  describe 'POST /employees' do
+    it 'creates employee with valid data' do
+      post '/employees', params: {
+        employee: {
+          full_name: 'Sowmya',
+          job_title: 'Software Engineer',
+          country: 'India',
+          salary: '100000'
+        }
+      }
+
+      expect(response).to have_http_status(:created)
+    end
+
+    it 'fails with invalid data' do
+      post '/employees', params: {
+        employee: {
+          full_name: '',
+          salary: 'abc'
+        }
+      }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+  end
+
 
 end

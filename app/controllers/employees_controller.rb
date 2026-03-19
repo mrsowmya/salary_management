@@ -1,6 +1,6 @@
 class EmployeesController < ApplicationController
 
-  before_action :set_employee, only: [:show]
+  before_action :set_employee, only: [:show, :update]
 
   def index
     @employees = Employee.all
@@ -19,6 +19,14 @@ class EmployeesController < ApplicationController
       render json: employee, status: :created
     else
       render json: { errors: employee.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @employee.update(employee_params)
+      render json: @employee
+    else
+      render json: { errors: @employee.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

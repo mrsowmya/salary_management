@@ -87,5 +87,12 @@ RSpec.describe "Employees API", type: :request do
     end
   end
 
+  describe 'DELETE /employees/:id' do
+    it 'deletes employee' do
+      delete "/employees/#{employees.first.id}"
+      expect(response).to have_http_status(:no_content)
+    end
+  end
+
 
 end

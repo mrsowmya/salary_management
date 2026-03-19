@@ -1,6 +1,6 @@
 class EmployeesController < ApplicationController
 
-  before_action :set_employee, only: [:show, :update]
+  before_action :set_employee, only: [:show, :update, :destroy]
 
   def index
     @employees = Employee.all
@@ -28,6 +28,11 @@ class EmployeesController < ApplicationController
     else
       render json: { errors: @employee.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @employee.destroy
+    head :no_content
   end
 
   private

@@ -70,7 +70,7 @@ RSpec.describe "Employees API", type: :request do
       }
 
       expect(response).to have_http_status(:ok)
-      expect(JSON.parse(response.body)[:job_title]).to eq('Software Developer')
+      expect(JSON.parse(response.body)['job_title']).to eq('Software Developer')
     end
 
     it 'fails with invalid data' do

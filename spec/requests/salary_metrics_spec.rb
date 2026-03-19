@@ -2,12 +2,12 @@
 require 'rails_helper'
 
 RSpec.describe "SalaryMetrics", type: :request do
-  describe "GET /salary_metrics" do
+  describe "GET /employees/salary_metrics" do
     it "returns salary stats for a country" do
       Employee.create!(full_name: "A", job_title: "Software Developer", country: "India", salary: 10000)
       Employee.create!(full_name: "B", job_title: "Software Engineer", country: "India", salary: 20000)
 
-      get "/salary_metrics", params: { country: "India" }
+      get "/employees/salary_metrics", params: { country: "India" }
 
       json = JSON.parse(response.body)
 
@@ -23,7 +23,7 @@ RSpec.describe "SalaryMetrics", type: :request do
       Employee.create!(full_name: "A", job_title: "Software Engineer", country: "India", salary: 10000)
       Employee.create!(full_name: "B", job_title: "Software Engineer", country: "United States", salary: 30000)
 
-      get "/salary_metrics", params: { job_title: "Engineer" }
+      get "/employees/salary_metrics", params: { job_title: "Software Engineer" }
 
       json = JSON.parse(response.body)
 

@@ -18,7 +18,7 @@ class EmployeesController < ApplicationController
     if employee.save
       render json: employee, status: :created
     else
-      render json: { errors: employee.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: employee.errors.full_messages }, status: :unprocessable_content
     end
   end
 
@@ -26,7 +26,7 @@ class EmployeesController < ApplicationController
     if @employee.update(employee_params)
       render json: @employee
     else
-      render json: { errors: @employee.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @employee.errors.full_messages }, status: :unprocessable_content
     end
   end
 
@@ -43,6 +43,13 @@ class EmployeesController < ApplicationController
       full_name: @employee.full_name,
       country: @employee.country
     )
+  end
+
+  def salary_metrics
+    result = SalaryMetrics.new(params).fetch
+    return render json: { error: result[:error] }, status: :not_found if result[:error].present?
+
+    render json: result
   end
 
   private

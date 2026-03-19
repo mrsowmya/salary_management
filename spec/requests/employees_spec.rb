@@ -59,5 +59,33 @@ RSpec.describe "Employees API", type: :request do
     end
   end
 
+  describe 'PUT /employees/:id' do
+    it 'updates employee with valid data' do
+      employee = employees.last
+
+      put "/employees/#{employee.id}", params: {
+        employee: {
+          job_title: 'Software Developer' 
+        }
+      }
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)[:job_title]).to eq('Software Developer')
+    end
+
+    it 'fails with invalid data' do
+      employee = employees.last
+
+      put "/employees/#{employee.id}", params: {
+        employee: {
+          full_name: '',
+          salary: 'abc'
+        }
+      }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+  end
+
 
 end

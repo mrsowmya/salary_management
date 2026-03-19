@@ -1,6 +1,6 @@
 class EmployeesController < ApplicationController
 
-  before_action :set_employee, only: [:show, :update, :destroy]
+  before_action :set_employee, only: [:show, :update, :destroy, :salary_breakdown]
 
   def index
     @employees = Employee.all
@@ -33,6 +33,16 @@ class EmployeesController < ApplicationController
   def destroy
     @employee.destroy
     head :no_content
+  end
+
+  def salary_breakdown
+    result = SalaryCalculator.new(@employee).calculate
+
+    render json: result.merge(
+      employee_id: @employee.id,
+      full_name: @employee.full_name,
+      country: @employee.country
+    )
   end
 
   private

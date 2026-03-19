@@ -16,5 +16,9 @@ Rails.application.routes.draw do
     member do
       get :salary_breakdown
     end
+
+    collection do
+      get :salary_metrics
+    end
   end
 end

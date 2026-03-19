@@ -8,7 +8,7 @@ class SalaryMetrics
     return { error: 'Provide country or job_title' } unless filter_present?
 
     data = query_result
-    return { error: 'No data found' } if data.blank?
+    return { error: 'No data found' } if data.blank? || data['avg_salary'].blank?
 
     build_response(data)
   end
@@ -22,10 +22,8 @@ class SalaryMetrics
   end
 
   def employees
-    scope = Employee.all
-
-    scope = scope.where(country: params[:country]) if params[:country].present?
-    scope = scope.where(job_title: params[:job_title]) if params[:job_title].present?
+    scope = Employee.where(country: params[:country]) if params[:country].present?
+    scope = Employee.where(job_title: params[:job_title]) if params[:job_title].present?
 
     scope
   end

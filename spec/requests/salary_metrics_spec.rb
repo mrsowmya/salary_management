@@ -31,4 +31,24 @@ RSpec.describe "SalaryMetrics", type: :request do
       expect(json["avg_salary"]).to eq(20000.0)
     end
   end
+
+  describe "GET /salary_metrics" do
+    it "returns error" do
+      get "/employees/salary_metrics"
+      json = JSON.parse(response.body)
+
+      expect(response).to have_http_status(:not_found)
+      expect(json["error"]).to eq('Provide country or job_title')
+    end
+  end
+
+  describe "GET /salary_metrics" do
+    it "returns error with no data" do
+      get "/employees/salary_metrics", params: { job_title: 'QA'}
+      json = JSON.parse(response.body)
+
+      expect(response).to have_http_status(:not_found)
+      expect(json["error"]).to eq('No data found')
+    end
+  end
 end

@@ -1,6 +1,6 @@
-require 'rails_helper'
+  require 'rails_helper'
 
-RSpec.describe "Employees API", type: :request do
+RSpec.describe "Employees API", type: :request do      
 
   let!(:employees) do
     3.times.map do
@@ -14,11 +14,25 @@ RSpec.describe "Employees API", type: :request do
   end
 
   describe 'GET /employees' do
+    let(:employees) do
+      Employee.create!(full_name: 'abc', job_title: 'SE', country: 'India', salary: 10000)
+      Employee.create!(full_name: 'abc', job_title: 'SE', country: 'India', salary: 200000)
+      Employee.create!(full_name: 'abc', job_title: 'SE', country: 'India', salary: 4000)
+    end
+
     it 'returns all the employees' do
 
       get '/employees'
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body).size).to eq(3)
+    end
+
+
+    it 'returns all the employees salary in range' do
+      get '/employees', params: { min_salary: 10000, max_salary: 200000 }
+      expect(response).to have_http_status(:ok)
+
+      expect(JSON.parse(response.body).size).to eq(2)
     end
   end
 

@@ -3,7 +3,11 @@ class EmployeesController < ApplicationController
   before_action :set_employee, only: [:show, :update, :destroy, :salary_breakdown]
 
   def index
-    @employees = Employee.all
+    @employees = if params[:min_salary] && params[:max_salary]
+      Employee.where(salary: params[:min_salary]..params[:max_salary])
+    else
+       Employee.all
+    end
 
     render json: @employees
   end

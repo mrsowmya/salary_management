@@ -67,4 +67,13 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'byebug'
+end
+
+group :development do
+  gem 'rubocop', require: false
+end
+
+group :test do
+  gem 'database_cleaner-active_record'
 end

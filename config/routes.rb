@@ -18,7 +18,11 @@ Rails.application.routes.draw do
     end
 
     collection do
-      get :salary_metrics
+      get :salary_metrics, 
     end
   end
+
+  # config/routes.rb
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
 end

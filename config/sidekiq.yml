@@ -1,0 +1,7 @@
+# config/sidekiq.yml
+:concurrency: 20
+
+:queues:
+  - critical
+  - mailers
+  - default
